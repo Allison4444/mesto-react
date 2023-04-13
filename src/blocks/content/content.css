@@ -1,0 +1,11 @@
+.content {
+  flex-grow: 1;
+}
+
+@media screen and (max-width: 540px) {
+  .content {
+    max-width: calc(100% - 2*19px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

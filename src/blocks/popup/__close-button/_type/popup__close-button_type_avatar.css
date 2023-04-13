@@ -1,0 +1,9 @@
+.popup__close-button_type_avatar {
+  bottom: 281px;
+}
+
+@media screen and (max-width:540px) {
+  .popup__close-button_type_avatar {
+    bottom: 280px;
+  }
+}

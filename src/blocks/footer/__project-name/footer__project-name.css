@@ -1,0 +1,14 @@
+.footer__project-name {
+  margin: 0;
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+@media screen and (max-width: 540px) {
+  .footer__project-name {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

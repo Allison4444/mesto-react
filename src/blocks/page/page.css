@@ -1,0 +1,33 @@
+.page {
+  background-color: black;
+  max-width: calc(1280px - 200px*2);
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 900px) {
+  .page {
+    max-width: calc(880px - 100px*2);
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .page {
+    max-width: max-content;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .page {
+    max-width: 100%;
+  }
+}
