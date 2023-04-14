@@ -1,14 +1,14 @@
-import React from "react";
+import {useState, useEffect} from "react";
 import api from "../utils/Api";
 import Card from "./Card";
 
 function Main({onEditProfile, onAddPlace , onEditAvatar, onCardClick}) {
-  const [userName, setUserName] = React.useState('');
-  const [userDescription, setUserDescription ] = React.useState('');
-  const [userAvatar, setUserAvatar] = React.useState('');
-  const [cards, setCards] = React.useState([]);
+  const [userName, setUserName] = useState('');
+  const [userDescription, setUserDescription ] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
+  const [cards, setCards] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([
       api.getInfo(),
       api.getInitialCards()
@@ -38,10 +38,14 @@ function Main({onEditProfile, onAddPlace , onEditAvatar, onCardClick}) {
         </div>
         <button type="button" className="profile__add-button" aria-label="Кнопка добавления карточек" onClick={onAddPlace}></button>
       </section>
-      <section className="elements content__elements" aria-label="Карточки достопримечательностей">
-        {cards.map((card) => (
-          <Card card={card} onCardClick={onCardClick} />
-        ))}
+      <section className="elements" aria-label="Карточки достопримечательностей">
+        <ul className="elements__list">
+          {cards.map((card) => (
+            <li className="elements__list-item" key={card._id}>
+              <Card  card={card} onCardClick={onCardClick} />
+            </li>
+          ))}
+        </ul>
       </section>
     </main>
   );

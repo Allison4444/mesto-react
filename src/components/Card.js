@@ -4,7 +4,7 @@ function Card({card, onCardClick}) {
   }
 
   return (
-    <article className="element" key={card._id}>
+    <article className="element">
       <img src={card.link} alt="" className="element__photo" onClick={handleClick}/>
       <button type="button" className="element__garbage-icon" aria-label="Кнопка удаления карточки"></button>
       <div className="element__caption">
