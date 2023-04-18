@@ -4,8 +4,8 @@ function ImagePopup({card, onClose}) {
       <div className="popup__photo-container">
         <button type="button" className="popup__close-button popup__close-button_type_photo" aria-label="Кнопка закрытия" onClick={onClose}></button>
         <figure className="popup__figure">
-          <img src={card !== null ? card.link : ''} alt={card !== null ? card.name : ''} className="popup__photo" />
-          <figcaption className="popup__figcaption">{card !== null ? card.name : ''}</figcaption>
+          <img src={card?.link} alt={card?.name} className="popup__photo" />
+          <figcaption className="popup__figcaption">{card?.name}</figcaption>
         </figure>
       </div>
     </div>
