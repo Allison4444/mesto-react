@@ -7,6 +7,7 @@ import ImagePopup from './ImagePopup';
 import api from '../utils/Api';
 import CurrentUserContext from '../contexts/CurrentUserContext'
 import CardsContext from '../contexts/CardsContext';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -75,6 +76,16 @@ function App() {
   function handleCardDelete(card) {
     api.deleteCard(card._id)
       .then(() => setCards(state => state.filter(с => с._id !== card._id)))
+      .catch(err => console.log(err))
+  }
+
+  function handleUpdateUser(data) {
+    api.editProfile(data)
+      .then(res => {
+        setCurrentUser(res);
+      })
+      .then(() => closeAllPopups())
+      .catch(err => console.log(err))
   }
 
   return (
@@ -90,14 +101,7 @@ function App() {
             onCardLike={handleCardLike}
             onCardDelete={handleCardDelete} />
           <Footer />
-          <PopupWithForm name='profile' title='Редактировать профиль' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-            <input type="text" name="name" placeholder="Ваше имя" required minLength="2" maxLength="40"
-              className="popup__input popup__input_element_name" id="name-input" />
-            <span className="popup__error name-input-error"></span>
-            <input type="text" name="about" placeholder="Ваш род деятельности" required minLength="2" maxLength="200"
-              className="popup__input popup__input_element_job" id="job-input" />
-            <span className="popup__error job-input-error"></span>
-          </PopupWithForm>
+          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
           <PopupWithForm name='card' title='Новое место' buttonText='Создать' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
             <input type="text" name="name" placeholder="Название" required minLength="2" maxLength="30"
               className="popup__input popup__input_element_title" id="title-input" />
