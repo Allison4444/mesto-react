@@ -3,7 +3,7 @@ import Card from "./Card";
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import CardsContext from '../contexts/CardsContext';
 
-function Main({onEditProfile, onAddPlace , onEditAvatar, onCardClick}) {
+function Main({onEditProfile, onAddPlace , onEditAvatar, onCardClick, onCardLike, onCardDelete}) {
   const currentUser = useContext(CurrentUserContext);
   const cards = useContext(CardsContext);
 
@@ -27,7 +27,7 @@ function Main({onEditProfile, onAddPlace , onEditAvatar, onCardClick}) {
         <ul className="elements__list">
           {cards.map((card) => (
             <li className="elements__list-item" key={card._id}>
-              <Card card={card} currentUser={currentUser} onCardClick={onCardClick} />
+              <Card card={card} currentUser={currentUser} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete} />
             </li>
           ))}
         </ul>

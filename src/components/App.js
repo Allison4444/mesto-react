@@ -31,7 +31,10 @@ function App() {
           ...initialCards
         ])
       })
+      .catch(err => console.log(err))
   }, [])
+
+  // console.log(cards)
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
@@ -61,9 +64,17 @@ function App() {
      const isLiked = card.likes.some(i => i._id === currentUser._id);
 
      // Отправляем запрос в API и получаем обновлённые данные карточки
-     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-     });
+     api.changeLikeStatus(card._id, !isLiked)
+      .then((newCard) => {
+        console.log(newCard)
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      })
+      .catch(err => console.log(err))
+  }
+
+  function handleCardDelete(card) {
+    api.deleteCard(card._id)
+      .then(() => setCards(state => state.filter(с => с._id !== card._id)))
   }
 
   return (
@@ -71,7 +82,13 @@ function App() {
       <CardsContext.Provider value={cards}>
         <div className="page">
           <Header />
-          <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
+          <Main
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+            onCardClick={handleCardClick}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete} />
           <Footer />
           <PopupWithForm name='profile' title='Редактировать профиль' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
             <input type="text" name="name" placeholder="Ваше имя" required minLength="2" maxLength="40"

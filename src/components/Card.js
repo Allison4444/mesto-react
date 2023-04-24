@@ -1,6 +1,14 @@
-function Card({card, currentUser, onCardClick}) {
+function Card({card, currentUser, onCardClick, onCardLike, onCardDelete}) {
   function handleClick() {
-    onCardClick(card)
+    onCardClick(card);
+  }
+
+  function handleLikeClick() {
+    onCardLike(card);
+  }
+
+  function handleDeleteClick() {
+    onCardDelete(card);
   }
 
   const isOwn = card.owner._id === currentUser._id;
@@ -13,11 +21,11 @@ function Card({card, currentUser, onCardClick}) {
   return (
     <article className="element">
       <img src={card.link} alt="" className="element__photo" onClick={handleClick}/>
-      {isOwn && <button type="button" className="element__garbage-icon" aria-label="Кнопка удаления карточки"></button>}
+      {isOwn && <button type="button" className="element__garbage-icon" aria-label="Кнопка удаления карточки" onClick={handleDeleteClick}></button>}
       <div className="element__caption">
         <h2 className="element__caption-title">{card.name}</h2>
         <div className="element__caption-like-group">
-          <button type="button" className={cardLikeButtonClassName} aria-label="Кнопка лайка"></button>
+          <button type="button" className={cardLikeButtonClassName} aria-label="Кнопка лайка" onClick={handleLikeClick} ></button>
           <span className="element__caption-like-count">{card.likes.length}</span>
         </div>
       </div>
