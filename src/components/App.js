@@ -9,6 +9,7 @@ import CurrentUserContext from '../contexts/CurrentUserContext'
 import CardsContext from '../contexts/CardsContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -60,10 +61,8 @@ function App() {
   }
 
   function handleCardLike(card) {
-     // Снова проверяем, есть ли уже лайк на этой карточке
      const isLiked = card.likes.some(i => i._id === currentUser._id);
 
-     // Отправляем запрос в API и получаем обновлённые данные карточки
      api.changeLikeStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
@@ -93,6 +92,13 @@ function App() {
       .catch(err => console.log(err))
   }
 
+  function handleAddPlaceSubmit(data) {
+    api.addNewCard(data)
+      .then(newCard => setCards([newCard, ...cards]))
+      .then(() => closeAllPopups())
+      .catch(err => console.log(err))
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <CardsContext.Provider value={cards}>
@@ -107,14 +113,7 @@ function App() {
             onCardDelete={handleCardDelete} />
           <Footer />
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-          <PopupWithForm name='card' title='Новое место' buttonText='Создать' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-            <input type="text" name="name" placeholder="Название" required minLength="2" maxLength="30"
-              className="popup__input popup__input_element_title" id="title-input" />
-            <span className="popup__error title-input-error"></span>
-            <input type="url" name="link" placeholder="Ссылка на картинку" required
-              className="popup__input popup__input_element_link" id="link-input" />
-            <span className="popup__error link-input-error"></span>
-          </PopupWithForm>
+          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
           <PopupWithForm name='delete' title='Вы уверены?' buttonText='Да'></PopupWithForm>
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
           <ImagePopup card={selectedCard} onClose={closeAllPopups}></ImagePopup>
