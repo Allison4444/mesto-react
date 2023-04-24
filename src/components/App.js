@@ -8,6 +8,7 @@ import api from '../utils/Api';
 import CurrentUserContext from '../contexts/CurrentUserContext'
 import CardsContext from '../contexts/CardsContext';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -34,8 +35,6 @@ function App() {
       })
       .catch(err => console.log(err))
   }, [])
-
-  // console.log(cards)
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
@@ -67,7 +66,6 @@ function App() {
      // Отправляем запрос в API и получаем обновлённые данные карточки
      api.changeLikeStatus(card._id, !isLiked)
       .then((newCard) => {
-        console.log(newCard)
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
       })
       .catch(err => console.log(err))
@@ -84,6 +82,13 @@ function App() {
       .then(res => {
         setCurrentUser(res);
       })
+      .then(() => closeAllPopups())
+      .catch(err => console.log(err))
+  }
+
+  function handleUpdateAvatar(data) {
+    api.editAvatar(data.avatar)
+      .then(res => setCurrentUser(res))
       .then(() => closeAllPopups())
       .catch(err => console.log(err))
   }
@@ -111,11 +116,7 @@ function App() {
             <span className="popup__error link-input-error"></span>
           </PopupWithForm>
           <PopupWithForm name='delete' title='Вы уверены?' buttonText='Да'></PopupWithForm>
-          <PopupWithForm name='avatar' title='Обновить аватар' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-            <input type="url" name="link" placeholder="Ссылка на фотографию" required
-              className="popup__input popup__input_element_link" id="avatar-link-input" />
-            <span className="popup__error avatar-link-input-error"></span>
-          </PopupWithForm>
+          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
           <ImagePopup card={selectedCard} onClose={closeAllPopups}></ImagePopup>
         </div>
       </CardsContext.Provider>
