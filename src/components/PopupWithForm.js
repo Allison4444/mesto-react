@@ -2,7 +2,7 @@ function PopupWithForm({name, title, buttonText, children, isOpen, onClose, onSu
   return (
     <div className={`popup page__popup-${name} ${isOpen ? 'popup_opened' : ''}`}>
       <div className="popup__container">
-        <form name={`${name}`} className="popup__form popup__form-card" noValidate onSubmit={onSubmit}>
+        <form name={`${name}`} className="popup__form popup__form-card" onSubmit={onSubmit}>
           <h2 className="popup__header">{title}</h2>
           {children}
           <button type="submit" className="popup__save-button">{buttonText || 'Сохранить'}</button>

@@ -20,7 +20,7 @@ function Card({card, currentUser, onCardClick, onCardLike, onCardDelete}) {
 
   return (
     <article className="element">
-      <img src={card.link} alt="" className="element__photo" onClick={handleClick}/>
+      <img src={card.link} alt={card.name} className="element__photo" onClick={handleClick}/>
       {isOwn && <button type="button" className="element__garbage-icon" aria-label="Кнопка удаления карточки" onClick={handleDeleteClick}></button>}
       <div className="element__caption">
         <h2 className="element__caption-title">{card.name}</h2>

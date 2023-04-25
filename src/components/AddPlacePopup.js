@@ -20,6 +20,9 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
       name: placeName,
       link: placeLink
     });
+
+    setPlaceName('');
+    setPlaceLink('');
   }
 
   return (
