@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 
-function ClosePopupOnKeydown({ onClose }) {
+function useClosePopupOnKeydown({ isOpen, onClose }) {
   useEffect(() => {
+    if (!isOpen) return;
     function handleCloseByEsc(e) {
       if (e.key === 'Escape') {
         onClose();
@@ -13,7 +14,7 @@ function ClosePopupOnKeydown({ onClose }) {
     return () => {
       document.removeEventListener('keydown', handleCloseByEsc)
     }
-  })
+  }, [isOpen, onClose])
 }
 
-export default ClosePopupOnKeydown;
+export default useClosePopupOnKeydown;

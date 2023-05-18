@@ -1,9 +1,10 @@
-import ClosePopupOnKeydown from "../hooks/ClosePopupOnKeydown";
+import useClosePopupOnKeydown from "../hooks/useClosePopupOnKeydown";
 
-function ImagePopup({card, onClose}) {
+function ImagePopup({ card, onClose }) {
+  useClosePopupOnKeydown({ isOpen: card, onClose });
+
   return (
     <div className={`popup page__popup-photo ${card !== null ? 'popup_opened' : ''}`} onClick={e => e.target.classList.contains('popup') && onClose()}>
-      {card && <ClosePopupOnKeydown onClose={onClose} />}
       <div className="popup__photo-container">
         <button type="button" className="popup__close-button popup__close-button_type_photo" aria-label="Кнопка закрытия" onClick={onClose}></button>
         <figure className="popup__figure">

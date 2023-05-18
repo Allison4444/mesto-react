@@ -1,9 +1,10 @@
-import ClosePopupOnKeydown from "../hooks/ClosePopupOnKeydown";
+import useClosePopupOnKeydown from "../hooks/useClosePopupOnKeydown";
 
-function PopupWithForm({name, title, buttonText, children, isOpen, onClose, onSubmit}) {
+function PopupWithForm({ name, title, buttonText, children, isOpen, onClose, onSubmit }) {
+  useClosePopupOnKeydown({ isOpen, onClose });
+
   return (
     <div className={`popup page__popup-${name} ${isOpen ? 'popup_opened' : ''}`} onClick={e => e.target.classList.contains('popup') && onClose()} >
-      {isOpen && <ClosePopupOnKeydown onClose={onClose}/>}
       <div className="popup__container">
         <form name={`${name}`} className="popup__form popup__form-card" onSubmit={onSubmit}>
           <h2 className="popup__header">{title}</h2>
